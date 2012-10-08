@@ -1,0 +1,6 @@
+[submodule "modules/semaphores"]
+	path = modules/semaphores
+	url = git@github.com:joaopapereira/cppSempahore.git
+[submodule "modules/logger"]
+	path = modules/logger
+	url = git@github.com:joaopapereira/cpplogger.git
