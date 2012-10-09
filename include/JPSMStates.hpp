@@ -28,7 +28,7 @@ namespace jpCppLibs{
 	 * This function is responsible for storing the arguments that
 	 * need to be passed to the inner State function.
 	 */
-	class MFunctionArgs{
+	class SMFunctionArgs{
 	public:
 		/**
 		 * Error Number storage
@@ -38,7 +38,7 @@ namespace jpCppLibs{
 		/**
 		 * Constructor of the function arguments
 		 */
-		MFunctionArgs();
+		SMFunctionArgs();
 	};
 
 	/**
@@ -53,7 +53,7 @@ namespace jpCppLibs{
 		/**
 		 * Pointer to the function that can be executed inside the state
 		 */
-		SMEvent *(*execfun)( MFunctionArgs* );
+		SMEvent *(*execfun)( SMFunctionArgs* );
 	public:
 		/**
 		 * Constructor of the state
@@ -61,7 +61,7 @@ namespace jpCppLibs{
 		 * @param id Identifier of the State
 		 * @param fun Pointer to the function to be executed
 		 */
-		SMState( std::string id, SMEvent *(*fun)(MFunctionArgs* )  );
+		SMState( std::string id, SMEvent *(*fun)(SMFunctionArgs* )  );
 		/**
 		 * Constructor of the state
 		 * Assigns the value of the identifier
@@ -73,7 +73,7 @@ namespace jpCppLibs{
 		 * @param args Arguments to pass to the function
 		 * @return Pointer to the event that to feed into the State Machine
 		 */
-		SMEvent* exec( MFunctionArgs* args );
+		SMEvent* exec( SMFunctionArgs* args );
 		/**
 		 * Function used to change the Identifier and pointer to the function
 		 * of the state
@@ -81,7 +81,7 @@ namespace jpCppLibs{
 		 * @param fun Pointer to the function to be executed
 		 * @return 0 in case of success
 		 */
-		int setState( std::string id, SMEvent *(*fun)(MFunctionArgs* ) );
+		int setState( std::string id, SMEvent *(*fun)(SMFunctionArgs* ) );
 		/**
 		 * Function used to compare the passed state with this one
 		 * @param state Pointer to the function to compare with

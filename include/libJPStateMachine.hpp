@@ -27,25 +27,92 @@
 #include <JPSMEvents.hpp>
 namespace jpCppLibs{
 
-
+	/**
+	 * Enumeration used to set the state
+     * of the state machine
+	 */
 	enum SMStateMachineStatus{
+		/**
+		 * Machine not initialized
+		 */
 		MSM_UNINIT,
+		/**
+		 * Machine is running
+		 */
 		MSM_RUN,
+		/**
+		 * Last event changed the machine state
+		 */
 		MSM_CHGSTATE,
+		/**
+		 * Machine is stopped
+		 */
 		MSM_END
 	};
 	
+	/**
+	 * Structure used to store the list of events
+	 * and the state that is reached when the event
+	 * is preformed
+	 */
 	typedef std::map<SMEvent*,SMState*> MStateNextMap;
+	/**
+	 * Structure used to store the list of events that 
+	 * will change a state in the machine
+	 */
 	typedef std::map<SMState*,MStateNextMap> MStateConnections;
 
-	class MStateMachine{
+	/**
+	 * This class implements the state machine
+	 * On it is possible to generate the state machine
+	 */
+	class JPStateMachine{
 	public:
-		MStateMachine( SMState * init, SMState * end );
+		/**
+		 * Class Constructor that initialized the fist and last state
+		 * of the machine
+		 * @param init Pointer to the initial state
+		 * @param end Pointer to the last state
+		 */
+		JPStateMachine( SMState * init, SMState * end );
+		/**
+		 * Function responsible for initializing the machine
+		 */
 		void initialize();
+		/**
+		 * Function that adds a new state to the machine
+		 * @param state Pointer to the state object to be added
+		 */
 		void addState( SMState * state );
+		/**
+		 * Add a connection between to states that already exist in the machine
+		 * @param actual Pointer to the start state of the connection
+		 * @param ev Pointer to the event that will preform the state change
+		 * @param nextState Pointer to the state that will be reached with the event ev
+		 * @return Integer 0 in case of success
+		 */
 		int addConnection( SMState* actual, SMEvent *ev , SMState* nextState );
+		/**
+		 * Retrive the current state of the machine
+		 * @return Pointer to the state
+		 */
 		const SMState* getCurrState();
+		/**
+		 * Execution of an external event.
+		 * This function checks if the event changes the machine
+		 * @param ev Pointer to the event to be evaluated
+		 * @param changeState Boolean that allow the function only to check the 
+		 *						event if changes the state(false) or changes the state
+		 *						if possible(true)
+		 * @return Integer 0 in case of success
+		 */
 		int externalEvent( SMEvent * ev , bool changeState = true  );
+		/**
+		 * Function that tries to move the machine into the next state
+		 * The decision of the state to move to is retrieved from the result of the
+		 * function of the state
+		 * @param execArgs Arguments to be passed to the state function
+		 */
 		int nextState( MFunctionArgs* execArgs );
 
 		/**
@@ -77,8 +144,18 @@ namespace jpCppLibs{
 		 */
 		void rewindMachine();
 	protected:
+		/**
+		 * Function used to initialize the initial and end state of the machine
+		 * @param init Pointer to the initial state
+		 * @param end Pointer to the last state
+		 */
 		void addInitEnd( SMState * init, SMState * end );
-		MStateMachine( std::string logName = "STM");
+		/**
+		 * Contructor that only initializes the log name
+		 * Function used by class the inherit from this class
+		 * @param logName String with the log module
+		 */
+		JPStateMachine( std::string logName = "STM");
 
 		/**
 		 * Set the machine state of Idle
@@ -102,10 +179,25 @@ namespace jpCppLibs{
 		 * @return BOolean True if have ended
 		 */
 		bool int_machineEnded( );
+		/**
+		 * List of connections of the machine
+		 */
 		MStateConnections connections;
+		/**
+		 * Actual status of the machine
+		 */
 		SMStateMachineStatus status;
+		/**
+		 * Pointer to the actual state of the machine
+		 */
 		SMState * actState;
+		/**
+		 * Pointer to the initial state of the machine
+		 */
 		SMState * initial;
+		/**
+		 * Pointer to the last state of the machine
+		 */
 		SMState * last;
 		/**
 		 * Previous state
@@ -124,8 +216,21 @@ namespace jpCppLibs{
 		 * state changed in last machine iteration
 		 */
 		bool stateChanged;
+		/**
+		 * Function that preform the check and updates the state of the machine
+		 * @param ev Pointer to the event to be evaluated
+		 * @param changeState Boolean that allow the function only to check the 
+		 *						event if changes the state(false) or changes the state
+		 *						if possible(true)
+		 */
 		SMState * evCheck( SMEvent * ev , bool changeState);
+		/**
+		 * Name of the module to be used by the logger
+		 */
 		std::string moduleName;
+		/**
+		 * Pointer to a semaphore used to synchronize access to the machine
+		 */
 		JPBinSemaphore * sem;
 	};
 
