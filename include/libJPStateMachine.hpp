@@ -22,7 +22,8 @@
 
 #include <map>
 #include <string>
-#include <libJPSemaphore.hpp>
+#include <libJPSemaphores.hpp>
+#include <libJPLogger.hpp>
 #include <JPSMStates.hpp>
 #include <JPSMEvents.hpp>
 namespace jpCppLibs{
@@ -71,19 +72,16 @@ namespace jpCppLibs{
 		/**
 		 * Class Constructor that initialized the fist and last state
 		 * of the machine
+		 * @param logger Pointer to the logger to be used in the state machine
 		 * @param init Pointer to the initial state
 		 * @param end Pointer to the last state
 		 */
-		JPStateMachine( SMState * init, SMState * end );
+		JPStateMachine( Logger * logger, SMState * init, SMState * end );
 		/**
 		 * Function responsible for initializing the machine
 		 */
 		void initialize();
-		/**
-		 * Function that adds a new state to the machine
-		 * @param state Pointer to the state object to be added
-		 */
-		void addState( SMState * state );
+
 		/**
 		 * Add a connection between to states that already exist in the machine
 		 * @param actual Pointer to the start state of the connection
@@ -113,11 +111,11 @@ namespace jpCppLibs{
 		 * function of the state
 		 * @param execArgs Arguments to be passed to the state function
 		 */
-		int nextState( MFunctionArgs* execArgs );
+		int nextState( SMFunctionArgs* execArgs );
 
 		/**
 		 * Function to check if machine ended
-		 * @return BOolean True if have ended
+		 * @return Boolean True if have ended
 		 */
 		bool machineEnded( );
 		/**
@@ -153,9 +151,10 @@ namespace jpCppLibs{
 		/**
 		 * Contructor that only initializes the log name
 		 * Function used by class the inherit from this class
+		 * @param logger Pointer to the logger to be used in the state machine
 		 * @param logName String with the log module
 		 */
-		JPStateMachine( std::string logName = "STM");
+		JPStateMachine( Logger * logger, std::string logName = "STM");
 
 		/**
 		 * Set the machine state of Idle
@@ -176,7 +175,7 @@ namespace jpCppLibs{
 		bool int_onErrorState();
 		/**
 		 * Function to check if machine ended
-		 * @return BOolean True if have ended
+		 * @return Bolean True if have ended
 		 */
 		bool int_machineEnded( );
 		/**
@@ -232,6 +231,10 @@ namespace jpCppLibs{
 		 * Pointer to a semaphore used to synchronize access to the machine
 		 */
 		JPBinSemaphore * sem;
+		/**
+		 * Logger pointer
+		 */
+		Logger * logger;
 	};
 
 #endif
