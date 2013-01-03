@@ -26,6 +26,7 @@
 #include <libJPLogger.hpp>
 #include <JPSMStates.hpp>
 #include <JPSMEvents.hpp>
+#include <JPSMExceptions.hpp>
 namespace jpCppLibs{
 
 	/**
@@ -236,5 +237,5 @@ namespace jpCppLibs{
 		 */
 		Logger * logger;
 	};
-
+};
 #endif

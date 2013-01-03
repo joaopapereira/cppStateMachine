@@ -53,11 +53,15 @@ FIND_LIBRARY(JPLoggerStatic REQUIRED)
 FIND_LIBRARY(JPSemaphoresStatic REQUIRED)
 FIND_LIBRARY( LOGGER_LIBRARY NAMES JPLoggerStatic
                 PATHS ${LOCAL_LIBS} ${INSTALL_LIBS} )
+message("install_libs:")
+message(${INSTALL_LIBS})
 SET( LIBS ${LIBS} ${LOGGER_LIBRARY})
 FIND_LIBRARY( JPSEMAPHORES_LIBRARY NAMES JPSemaphoresStatic
                 PATHS ${LOCAL_LIBS} ${INSTALL_LIBS} )
 SET( LIBS ${LIBS} ${JPSEMAPHORES_LIBRARY})
+message("Libs:")
 message(${LIBS})
+message("install_libs:")
 message(${INSTALL_LIBS})
 
 #####################################

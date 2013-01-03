@@ -1,6 +1,8 @@
 #ifndef __JPSMEXCEPTIONS_HPP__
 #define __JPSMEXCEPTIONS_HPP__
 
+#include <string>
+
 namespace jpCppLibs{
 	/**
 	 * Class the implements the exceptions of the logger
@@ -52,6 +54,7 @@ namespace jpCppLibs{
 	 * Class that implements the exception for end of state machine
 	 */
 	class SMExpMachineEnd: public StateMachineExceptions{
+		public:
 		/**
 		 * Constructor used when no message needs to be passed
 		 * @param showErrno Indicates if the ERRNO should be or not written
@@ -62,6 +65,7 @@ namespace jpCppLibs{
 	 * Class that implements the exception for end of state machine
 	 */
 	class SMExpNullLogger: public StateMachineExceptions{
+		public:
 		/**
 		 * Constructor used when no message needs to be passed
 		 * @param showErrno Indicates if the ERRNO should be or not written
@@ -72,6 +76,7 @@ namespace jpCppLibs{
 	 * Class that implements the exception for end of state machine
 	 */
 	class SMExpNullState: public StateMachineExceptions{
+		public:
 		/**
 		 * Constructor used when no message needs to be passed
 		 * @param showErrno Indicates if the ERRNO should be or not written
@@ -82,6 +87,7 @@ namespace jpCppLibs{
 	 * Class that implements the exception for end of state machine
 	 */
 	class SMExpNullEvent: public StateMachineExceptions{
+		public:
 		/**
 		 * Constructor used when no message needs to be passed
 		 * @param showErrno Indicates if the ERRNO should be or not written
@@ -89,3 +95,4 @@ namespace jpCppLibs{
 		SMExpNullEvent(bool showErrno = false) throw():StateMachineExceptions("Event is NULL",showErrno){};
 	};
 };
+#endif
